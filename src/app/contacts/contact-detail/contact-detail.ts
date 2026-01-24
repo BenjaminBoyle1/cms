@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Contact } from '../contact.model';
 
@@ -10,5 +10,5 @@ import { Contact } from '../contact.model';
   styleUrls: ['./contact-detail.css']
 })
 export class ContactDetail {
-  contact: Contact | null = null; // no selected contact yet
+  @Input() contact!: Contact;
 }
