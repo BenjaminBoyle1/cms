@@ -1,1 +1,23 @@
-<p>document-detail works!</p>
+<div class="panel panel-default">
+  <div class="panel-heading clearfix">
+    <div class="pull-left">
+      <h4 class="panel-title">{{ document.name }}</h4>
+    </div>
+
+    <div class="pull-right">
+      <a class="btn btn-primary btn-sm" [href]="document.url" target="_blank">View</a>
+      <a class="btn btn-info btn-sm" style="margin-left: 5px;" href="#">Edit</a>
+      <a class="btn btn-danger btn-sm" style="margin-left: 5px;" href="#">Delete</a>
+    </div>
+  </div>
+
+  <div class="panel-body">
+    <p><strong>Description:</strong></p>
+    <p>{{ document.description }}</p>
+
+    <p><strong>URL:</strong></p>
+    <p>
+      <a [href]="document.url" target="_blank">{{ document.url }}</a>
+    </p>
+  </div>
+</div>
