@@ -1,27 +1,16 @@
-<div class="panel panel-default">
+<div class="panel panel-default" *ngIf="contact as contact">
   <div class="panel-heading clearfix">
     <div class="pull-left">
-      <h4 class="panel-title">{{ contact.name }}</h4>
+      <h4 class="panel-title"><strong>{{ contact.name }}</strong></h4>
     </div>
 
     <div class="pull-right">
-      <a href="#" class="btn btn-primary btn-sm">Edit</a>
-      <a href="#" class="btn btn-danger btn-sm" style="margin-left: 5px;">Delete</a>
+      <a class="btn btn-info btn-sm" [routerLink]="['edit']">Edit</a>
+      <a class="btn btn-danger btn-sm" style="margin-left: 5px;" (click)="onDelete()">Delete</a>
     </div>
   </div>
 
   <div class="panel-body">
-    <!-- Only show the image if a contact exists (prevents broken null image) -->
-    <div class="text-center" style="margin-bottom: 15px;" *ngIf="contact">
-      <img
-        class="img-responsive img-circle"
-        [src]="contact.imageUrl"
-        [alt]="contact.name"
-        style="max-width: 200px; margin: 0 auto;"
-      />
-    </div>
-
-    <!-- Email/phone show blank until data exists (as required) -->
     <p><strong>Email:</strong> {{ contact.email }}</p>
     <p><strong>Phone:</strong> {{ contact.phone }}</p>
   </div>

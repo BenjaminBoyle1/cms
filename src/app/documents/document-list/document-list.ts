@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+
 import { Document } from '../document.model';
-import { DocumentItem } from '../document-item/document-item';
 import { DocumentService } from '../document';
+import { DocumentItem } from '../document-item/document-item';
 
 @Component({
   selector: 'cms-document-list',
   standalone: true,
-  imports: [CommonModule, DocumentItem],
+  imports: [CommonModule, RouterLink, DocumentItem],
   templateUrl: './document-list.html',
   styleUrls: ['./document-list.css']
 })
@@ -18,9 +20,9 @@ export class DocumentList implements OnInit {
 
   ngOnInit() {
     this.documents = this.documentService.getDocuments();
-  }
 
-  onSelectedDocument(document: Document) {
-    this.documentService.documentSelectedEvent.emit(document);
+    this.documentService.documentChangedEvent.subscribe((docs: Document[]) => {
+      this.documents = docs;
+    });
   }
 }

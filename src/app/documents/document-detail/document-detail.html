@@ -1,24 +1,18 @@
-<div class="panel panel-default">
+<div class="panel panel-default" *ngIf="document as document">
   <div class="panel-heading clearfix">
     <div class="pull-left">
-      <h4 class="panel-title document-title">{{ document.name }}</h4>
-
+      <h4 class="panel-title"><strong>{{ document.name }}</strong></h4>
     </div>
 
     <div class="pull-right">
-      <a class="btn btn-primary btn-sm" [href]="document.url" target="_blank">View</a>
-      <a class="btn btn-info btn-sm" style="margin-left: 5px;" href="#">Edit</a>
-      <a class="btn btn-danger btn-sm" style="margin-left: 5px;" href="#">Delete</a>
+      <a class="btn btn-primary btn-sm" (click)="onView()">View</a>
+      <a class="btn btn-info btn-sm" style="margin-left: 5px;" [routerLink]="['edit']">Edit</a>
+      <a class="btn btn-danger btn-sm" style="margin-left: 5px;" (click)="onDelete()">Delete</a>
     </div>
   </div>
 
   <div class="panel-body">
-    <p><strong>Description:</strong></p>
-    <p>{{ document.description }}</p>
-
-    <p><strong>URL:</strong></p>
-    <p>
-      <a [href]="document.url" target="_blank">{{ document.url }}</a>
-    </p>
+    <p><strong>Description:</strong> {{ document.description }}</p>
+    <p><strong>URL:</strong> {{ document.url }}</p>
   </div>
 </div>
