@@ -1,4 +1,6 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+
 import { Document } from './document.model';
 import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 
@@ -6,12 +8,15 @@ import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
   providedIn: 'root'
 })
 export class DocumentService {
-  documentChangedEvent = new EventEmitter<Document[]>();
+  // Observable that emits whenever the document list changes
+  documentListChangedEvent = new Subject<Document[]>();
 
   documents: Document[] = [];
+  maxDocumentId: number = 0;
 
   constructor() {
     this.documents = MOCKDOCUMENTS;
+    this.maxDocumentId = this.getMaxId();
   }
 
   getDocuments(): Document[] {
@@ -20,18 +25,66 @@ export class DocumentService {
 
   getDocument(id: string): Document | null {
     for (const doc of this.documents) {
-      if (doc.id === id) return doc;
+      if (doc.id === id) {
+        return doc;
+      }
     }
     return null;
   }
 
-  deleteDocument(document: Document | null) {
-    if (!document) return;
+  getMaxId(): number {
+    let maxId = 0;
+
+    for (const doc of this.documents) {
+      const currentId = parseInt(doc.id, 10);
+      if (currentId > maxId) {
+        maxId = currentId;
+      }
+    }
+
+    return maxId;
+  }
+
+  addDocument(newDocument: Document | null | undefined) {
+    if (!newDocument) {
+      return;
+    }
+
+    this.maxDocumentId++;
+    newDocument.id = this.maxDocumentId.toString();
+    this.documents.push(newDocument);
+
+    this.documentListChangedEvent.next(this.documents.slice());
+  }
+
+  updateDocument(originalDocument: Document | null | undefined, newDocument: Document | null | undefined) {
+    if (!originalDocument || !newDocument) {
+      return;
+    }
+
+    const pos = this.documents.indexOf(originalDocument);
+    if (pos < 0) {
+      return;
+    }
+
+    newDocument.id = originalDocument.id;
+    this.documents[pos] = newDocument;
+
+    this.documentListChangedEvent.next(this.documents.slice());
+  }
+
+  deleteDocument(document: Document | null | undefined) {
+    if (!document) {
+      return;
+    }
 
     const pos = this.documents.indexOf(document);
-    if (pos < 0) return;
+    if (pos < 0) {
+      return;
+    }
 
     this.documents.splice(pos, 1);
-    this.documentChangedEvent.emit(this.documents.slice());
+
+    this.documentListChangedEvent.next(this.documents.slice());
   }
 }
