@@ -15,7 +15,7 @@
             class="form-control required"
             required
             #name="ngModel"
-            [ngModel]="contact?.name"
+            [ngModel]="contact.name"
             size="120"
             maxlength="120">
         </div>
@@ -32,7 +32,7 @@
             required
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
             #email="ngModel"
-            [ngModel]="contact?.email"
+            [ngModel]="contact.email"
             size="120"
             maxlength="255">
 
@@ -52,7 +52,7 @@
             class="form-control invalid"
             pattern="\D*([2-9]\d{2})(\D*)([2-9]\d{2})(\D*)(\d{4})\D*"
             #phone="ngModel"
-            [ngModel]="contact?.phone"
+            [ngModel]="contact.phone"
             size="150"
             maxlength="255">
 
@@ -70,7 +70,7 @@
             id="imageUrl"
             name="imageUrl"
             class="form-control"
-            [ngModel]="contact?.imageUrl"
+            [ngModel]="contact.imageUrl"
             size="150"
             maxlength="255">
         </div>
