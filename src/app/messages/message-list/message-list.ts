@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { Message } from '../message.model';
 import { MessageItem } from '../message-item/message-item';
 import { MessageEdit } from '../message-edit/message-edit';
@@ -13,21 +14,17 @@ import { MessageService } from '../message';
   styleUrls: ['./message-list.css']
 })
 export class MessageList implements OnInit {
-
   messages: Message[] = [];
 
   constructor(private messageService: MessageService) {}
 
   ngOnInit() {
-
-    // Initial load
-    this.messages = this.messageService.getMessages();
-
-    // Listen for updates
     this.messageService.messageChangedEvent.subscribe(
       (messages: Message[]) => {
         this.messages = messages;
       }
     );
+
+    this.messages = this.messageService.getMessages();
   }
 }
